@@ -21,36 +21,28 @@ import java.util.List;
 public class RecommendNewsList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-
-            String uri =  "jdbc:mysql://localhost:3306/irecommender?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true";
-            String user = "root";
-            String password = "root";
-
-            List<RecommendNews> List_RecommendNews = new ArrayList<RecommendNews>(10);
-
+            List<RecommendNews> list = new ArrayList<RecommendNews>(10);
             String userId = request.getParameter("userId");
-
-            Connection con = DriverManager.getConnection(uri, user, password);
             String sql = "SELECT news.newsId,newsTitle,newsContent FROM " +
                     "user_news_rec,news WHERE user_news_rec.newsId = news.newsId " +
-                    "AND userId = " + userId;
-            Statement sta = con.createStatement();
-            ResultSet resultSet = sta.executeQuery(sql);
+                    "AND userId = "+userId ;
+            ResultSet resultSet = DBUtil.executeQuery(sql);
             while (resultSet.next()){
                 RecommendNews temp = new RecommendNews();
                 temp.setNewsId(resultSet.getInt("newsId"));
                 temp.setNewsTitle(resultSet.getString("newsTitle"));
-                List_RecommendNews.add(temp);
+                list.add(temp);
             }
 
 
             ObjectMapper mapper = new ObjectMapper();
 
             //Java集合转JSON
-            String jsonlist = mapper.writeValueAsString(List_RecommendNews)+"sadasdada";
-            response.setCharacterEncoding("UTF-8");
+            String jsonlist = mapper.writeValueAsString(list)+"sadasdada";
+            System.out.print(jsonlist);
+            response.setHeader("Content-type", "text/html; charset=utf-8");
             PrintWriter Writer_response = response.getWriter();
+
             Writer_response.write(jsonlist);
 
         }catch (Exception e){

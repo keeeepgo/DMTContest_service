@@ -9,7 +9,7 @@ public class DBUtil {
     private static final String URL = "jdbc:mysql://localhost:3306";
     private static final String DB_NAME = "irecommender";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "root";
     /*
      * 声明JDBC对象
      */
@@ -24,7 +24,8 @@ public class DBUtil {
     public static synchronized Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            connection = DriverManager.getConnection(URL + "/" + DB_NAME+"?"+"user="+USER+"&password="+PASSWORD+"&characterEncoding="+"utf-8");
+            String con = URL + "/" + DB_NAME+"?"+"user="+USER+"&password="+PASSWORD+"&characterEncoding="+"utf-8";
+            connection = DriverManager.getConnection(con + "&serverTimezone=CTT&useUnicode=true&allowMultiQueries=true");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
