@@ -49,12 +49,14 @@ public class UserTagList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<UserTag> list = new ArrayList<UserTag>(10);
+            List<UserTag> list = new ArrayList<UserTag>();
             String userId = request.getParameter("userId");
-            String sql = "SELECT tag.tagId,tagContent FROM " +
-                    "user_tag,tag WHERE user_tag.tagId=tag.tagId " +
-                    "AND userId="+userId + " ORDER BY user_tag.weight DESC";
+            String sql = "SELECT tag.tagId,tagContent FROM user_tag,tag "
+                    + "WHERE user_tag.tagId=tag.tagId "
+                    + "AND userId="+userId + " ORDER BY user_tag.weight DESC";
+
             ResultSet resultSet = DBUtil.executeQuery(sql);
+
             while (resultSet.next()){
                 UserTag temp = new UserTag();
                 temp.setTagId(resultSet.getInt("tagId"));
