@@ -19,7 +19,32 @@ import java.util.List;
 @WebServlet("/UserTagList")
 public class UserTagList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            String userId = request.getParameter("userId");
+            String tagContent = request.getParameter("tagContent");
+            String sql =  "INSERT INTO tag(tagContent) VALUES(" + tagContent+");";
+            ResultSet resultSet1 = DBUtil.executeQuery(sql);
 
+            sql = "SELECT tagId FROM WHERE tagContent="+ tagContent+";";
+            ResultSet resultSet2 = DBUtil.executeQuery(sql);
+            resultSet2.next();
+            int tagId = resultSet2.getInt("tagId");
+
+            sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1";
+
+
+
+
+            response.setHeader("Content-type", "text/html; charset=utf-8");
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Headers", "Authentication");
+            PrintWriter Writer_response = response.getWriter();
+            System.out.println("上传成功");
+            Writer_response.write("上传成功");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
