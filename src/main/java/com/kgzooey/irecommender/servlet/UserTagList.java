@@ -1,8 +1,10 @@
 package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.RecommendNews;
+import com.kgzooey.irecommender.models.UserTag;
+import com.kgzooey.irecommender.servlet.DBUtil;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,30 +12,28 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/RecommendNewsList")
-public class RecommendNewsList extends HttpServlet {
+@WebServlet("/UserTagList")
+public class UserTagList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<RecommendNews> list = new ArrayList<RecommendNews>(10);
+            List<UserTag> list = new ArrayList<UserTag>(10);
             String userId = request.getParameter("userId");
-            String sql = "SELECT news.newsId,newsTitle,newsContent FROM " +
-                    "user_news_rec,news WHERE user_news_rec.newsId=news.newsId " +
-                    "AND userId="+userId + " ORDER BY user_news_rec.score DESC";
+            String sql = "SELECT tag.tagId,tagContent FROM " +
+                    "user_tag,tag WHERE user_tag.tagId=tag.tagId " +
+                    "AND userId="+userId + " ORDER BY user_tag.weight DESC";
             ResultSet resultSet = DBUtil.executeQuery(sql);
             while (resultSet.next()){
-                RecommendNews temp = new RecommendNews();
-                temp.setNewsId(resultSet.getInt("newsId"));
-                temp.setNewsTitle(resultSet.getString("newsTitle"));
+                UserTag temp = new UserTag();
+                temp.setTagId(resultSet.getInt("tagId"));
+                temp.setTagContent(resultSet.getString("tagContent"));
                 list.add(temp);
             }
 
@@ -47,13 +47,11 @@ public class RecommendNewsList extends HttpServlet {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
-
+            System.out.println(jsonlist);
             Writer_response.write(jsonlist);
 
         }catch (Exception e){
             e.printStackTrace();
         }
-
     }
-
 }
