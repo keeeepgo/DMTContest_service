@@ -27,8 +27,8 @@ public class RecommendNewsList extends HttpServlet {
             List<RecommendNews> list = new ArrayList<RecommendNews>();
             String userId = request.getParameter("userId");
             String sql = "SELECT news.newsId,newsTitle,newsContent FROM user_news_rec,news"
-                    + " WHERE user_news_rec.newsId=news.newsId "
-                    + "AND userId="+userId
+                    + " WHERE user_news_rec.newsId=news.newsId"
+                    + " AND userId="+userId
                     + " ORDER BY user_news_rec.score DESC";
             ResultSet resultSet = DBUtil.executeQuery(sql);
             while (resultSet.next()){
