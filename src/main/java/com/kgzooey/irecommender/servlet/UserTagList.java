@@ -30,7 +30,7 @@ public class UserTagList extends HttpServlet {
             resultSet2.next();
             int tagId = resultSet2.getInt("tagId");
 
-            sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1";
+            sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1)";
 
 
 
@@ -41,7 +41,7 @@ public class UserTagList extends HttpServlet {
             PrintWriter Writer_response = response.getWriter();
             System.out.println("上传成功");
             Writer_response.write("上传成功");
-
+            DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -76,7 +76,7 @@ public class UserTagList extends HttpServlet {
             PrintWriter Writer_response = response.getWriter();
             System.out.println(jsonlist);
             Writer_response.write(jsonlist);
-
+            DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();
         }

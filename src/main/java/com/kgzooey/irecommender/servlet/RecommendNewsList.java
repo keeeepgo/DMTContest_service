@@ -49,7 +49,7 @@ public class RecommendNewsList extends HttpServlet {
             PrintWriter Writer_response = response.getWriter();
 
             Writer_response.write(jsonlist);
-
+            DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();
         }

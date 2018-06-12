@@ -51,7 +51,7 @@ public class News extends HttpServlet {
             PrintWriter Writer_response = response.getWriter();
             System.out.println(json);
             Writer_response.write(json);
-
+            DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();
         }
