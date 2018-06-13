@@ -49,7 +49,7 @@ public class News extends HttpServlet {
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
             Writer_response.write(json);
-
+            DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();
         }

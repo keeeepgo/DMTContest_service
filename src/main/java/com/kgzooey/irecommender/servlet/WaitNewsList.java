@@ -17,7 +17,15 @@ import java.util.List;
 @WebServlet("/WaitNewsList")
 public class WaitNewsList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request,response);
+        try {
+            String userId = request.getParameter("userId");
+            String newsId = request.getParameter("newsId");
+            String sql = "INSERT INTO read_record VALUES("+userId+","+newsId+","+"0,"+"2"+")";
+            DBUtil.executeUpdata(sql);
+            DBUtil.close();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
