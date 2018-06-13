@@ -44,12 +44,10 @@ public class News extends HttpServlet {
 
             //Java集合转JSON
             String json = mapper.writeValueAsString(newsBean);
-            System.out.print(json);
             response.setHeader("Content-type", "text/html; charset=utf-8");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
-            System.out.println(json);
             Writer_response.write(json);
 
         }catch (Exception e){

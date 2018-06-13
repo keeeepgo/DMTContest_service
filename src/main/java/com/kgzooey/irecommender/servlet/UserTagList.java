@@ -20,27 +20,27 @@ import java.util.List;
 public class UserTagList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
+            request.setCharacterEncoding("utf-8");
             String userId = request.getParameter("userId");
             String tagContent = request.getParameter("tagContent");
-            String sql =  "INSERT INTO tag(tagContent) VALUES(" + tagContent+");";
-            ResultSet resultSet1 = DBUtil.executeQuery(sql);
+            System.out.println(userId);
+            String sql =  "INSERT INTO tag(tagContent) VALUES( " +"'"+ tagContent+"'"+");";
+            System.out.println(sql);
+            DBUtil.executeUpdata(sql);
 
-            sql = "SELECT tagId FROM WHERE tagContent="+ tagContent+";";
+            sql = "SELECT tagId FROM tag WHERE tagContent='"+ tagContent+"';";
             ResultSet resultSet2 = DBUtil.executeQuery(sql);
             resultSet2.next();
             int tagId = resultSet2.getInt("tagId");
 
             sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1";
 
-
-
-
             response.setHeader("Content-type", "text/html; charset=utf-8");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
-            System.out.println("上传成功");
-            Writer_response.write("上传成功");
+            System.out.println("上传成功"+tagContent);
+            Writer_response.write("上传成功"+tagContent);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -77,6 +77,28 @@ public class UserTagList extends HttpServlet {
             System.out.println(jsonlist);
             Writer_response.write(jsonlist);
 
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        try {
+            int userId = Integer.parseInt(req.getParameter("userId"));
+            int tagId = Integer.parseInt(req.getParameter("tagId"));
+            String sql = "DELETE FROM user_tag WHERE userId=" + userId + " AND tagId=" + tagId;
+            System.out.println(sql);
+            int temp = DBUtil.executeUpdata(sql);
+            System.out.println(temp);
+            resp.setHeader("Content-type", "text/html; charset=utf-8");
+            resp.setHeader("Access-Control-Allow-Origin", "my");
+            resp.setHeader("Access-Control-Allow-Headers", "Authentication");
+            if (temp < 1) {
+                resp.getWriter().write("删除成功");
+            } else {
+                resp.getWriter().write("删除失败");
+            }
         }catch (Exception e){
             e.printStackTrace();
         }
