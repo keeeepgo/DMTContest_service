@@ -1,7 +1,7 @@
 package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.UserTag;
+import com.kgzooey.irecommender.models.Note;
 import com.kgzooey.irecommender.servlet.DBUtil;
 
 import javax.servlet.Servlet;
@@ -16,32 +16,29 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/UserTagList")
-public class UserTagList extends HttpServlet {
+@WebServlet("/NoteList")
+public class NoteList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             request.setCharacterEncoding("utf-8");
             String userId = request.getParameter("userId");
-            String tagContent = request.getParameter("tagContent");
+            String noteContent = request.getParameter("noteContent");
             System.out.println(userId);
-            String sql =  "INSERT INTO tag(tagContent) VALUES( " +"'"+ tagContent+"'"+");";
+            String sql =  "INSERT INTO note(noteContent) VALUES( " +"'"+ noteContent+"'"+");";
             System.out.println(sql);
-            DBUtil.executeUpdata(sql);
-
-            sql = "SELECT tagId FROM tag WHERE tagContent='"+ tagContent+"';";
-            ResultSet resultSet2 = DBUtil.executeQuery(sql);
-            resultSet2.next();
-            int tagId = resultSet2.getInt("tagId");
-
-            sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1)";
 
             response.setHeader("Content-type", "text/html; charset=utf-8");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
 
-            System.out.println("上传成功");
-            Writer_response.write("上传成功");
+            if(DBUtil.executeUpdata(sql) == 1){
+                System.out.println("上传成功");
+                Writer_response.write("上传成功");
+            }else{
+                Writer_response.write("上传失败");
+            }
+
             DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();
@@ -50,18 +47,18 @@ public class UserTagList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<UserTag> list = new ArrayList<UserTag>();
+            List<Note> list = new ArrayList<Note>();
             String userId = request.getParameter("userId");
-            String sql = "SELECT tag.tagId,tagContent FROM user_tag,tag "
-                    + "WHERE user_tag.tagId=tag.tagId "
-                    + "AND userId="+userId + " ORDER BY user_tag.weight DESC";
+            String sql = " SELECT noteId,noteDate,noteContent FROM note "
+                    + " WHERE userId="+userId + " ORDER BY noteDate";
 
             ResultSet resultSet = DBUtil.executeQuery(sql);
 
             while (resultSet.next()){
-                UserTag temp = new UserTag();
-                temp.setTagId(resultSet.getInt("tagId"));
-                temp.setTagContent(resultSet.getString("tagContent"));
+                Note temp = new Note();
+                temp.setNoteId(resultSet.getInt("noteId"));
+                temp.setNoteDate(resultSet.getDate("noteDate"));
+                temp.setNoteContent(resultSet.getString("noteContent"));
                 list.add(temp);
             }
 
@@ -83,25 +80,4 @@ public class UserTagList extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        try {
-            int userId = Integer.parseInt(req.getParameter("userId"));
-            int tagId = Integer.parseInt(req.getParameter("tagId"));
-            String sql = "DELETE FROM user_tag WHERE userId=" + userId + " AND tagId=" + tagId;
-            System.out.println(sql);
-            int temp = DBUtil.executeUpdata(sql);
-            System.out.println(temp);
-            resp.setHeader("Content-type", "text/html; charset=utf-8");
-            resp.setHeader("Access-Control-Allow-Origin", "*");
-            resp.setHeader("Access-Control-Allow-Headers", "Authentication");
-            if (temp < 1) {
-                resp.getWriter().write("删除成功");
-            } else {
-                resp.getWriter().write("删除失败");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
 }
