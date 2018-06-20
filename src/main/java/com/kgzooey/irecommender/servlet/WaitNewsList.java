@@ -2,6 +2,7 @@ package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgzooey.irecommender.models.WaitNews;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,9 +21,20 @@ public class WaitNewsList extends HttpServlet {
         try {
             String userId = request.getParameter("userId");
             String newsId = request.getParameter("newsId");
-            String sql = "INSERT INTO read_record VALUES("+userId+","+newsId+","+"0,"+"2"+")";
-            DBUtil.executeUpdata(sql);
+            String sql_result = "添加失败";
+            String sql = " UPDATE read_record SET readStatus=" +userId
+                        +" WHERE userId= "+userId+" AND newsId= "+newsId;
+            if(DBUtil.executeUpdata(sql)==1) {
+                sql_result = "添加成功";
+            }
+
             DBUtil.close();
+            response.setHeader("Content-type", "text/html; charset=utf-8");
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Headers", "Authentication");
+            PrintWriter Writer_response = response.getWriter();
+            Writer_response.write(sql_result);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -32,28 +44,18 @@ public class WaitNewsList extends HttpServlet {
         try{
             List<WaitNews> list = new ArrayList<WaitNews>();
             String userId = request.getParameter("userId");
-            String sql = " SELECT newsId FROM read_record"
-                    +" WHERE userId=1"
-                    +" AND readStatus=2";
+            String sql = " SELECT newsTitle,news.newsId FROM read_record,news"
+                    +" WHERE read_record.newsId=news.newsId"
+                    +" AND readStatus=1"
+                    +" AND userId="+userId;
             ResultSet resultSet1 = DBUtil.executeQuery(sql);
             while (resultSet1.next()){
                 WaitNews waitNews = new WaitNews();
                 waitNews.setNewsId(resultSet1.getInt("newsId"));
-                System.out.println(waitNews.getNewsId());
+                waitNews.setNewsTitle(resultSet1.getString("newsTitle"));
                 list.add(waitNews);
             }
 
-            for (int i = 0; i < list.size(); i++){
-                sql = " SELECT newsTitle FROM news"
-                        +" WHERE news.newsId="+list.get(i).getNewsId();
-                ResultSet resultSet2 = DBUtil.executeQuery(sql);
-                int j = 0;
-                while (resultSet2.next()){
-                    list.get(j).setNewsTitle(resultSet2.getString("newsTitle"));
-                    System.out.println(resultSet2.getString("newsTitle"));
-                    j++;
-                }
-            }
             ObjectMapper mapper = new ObjectMapper();
 
             //Java集合转JSON
@@ -63,7 +65,6 @@ public class WaitNewsList extends HttpServlet {
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
-            System.out.println(jsonlist);
             Writer_response.write(jsonlist);
         }catch (Exception e){
             e.printStackTrace();

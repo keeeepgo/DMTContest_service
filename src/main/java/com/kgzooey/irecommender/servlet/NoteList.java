@@ -22,9 +22,10 @@ public class NoteList extends HttpServlet {
         try {
             request.setCharacterEncoding("utf-8");
             String userId = request.getParameter("userId");
+            String noteDate = request.getParameter("noteDate");
             String noteContent = request.getParameter("noteContent");
             System.out.println(userId);
-            String sql =  "INSERT INTO note(noteContent) VALUES( " +"'"+ noteContent+"'"+");";
+            String sql =  "INSERT INTO note(userId,noteDate,noteContent) VALUES( " +userId+" , "+" '"+ noteDate+"'"+" ,'"+ noteContent+"'"+");";
             System.out.println(sql);
 
             response.setHeader("Content-type", "text/html; charset=utf-8");
