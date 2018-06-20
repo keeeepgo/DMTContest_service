@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.interfaces.RSAKey;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -39,29 +40,27 @@ public class FinishedNews extends HttpServlet {
             }else if (day<10){
                 time = year + "-" + month + "-0" + day;
             }else{
-                time = year + "-" + month + "0" + day;
+                time = year + "-" + month + "-0" + day;
             }
-            System.out.print("当前时间:" + time);
-            String sql = "SELECT date FROM vitality WHERE date =" + time;
+            System.out.println("当前时间:" + time);
+            String sql = "SELECT * FROM vitality WHERE date =" +'"'+ time +'"';
             ResultSet resultSet = DBUtil.executeQuery(sql);
             if (resultSet.next()) {
+                System.out.println("有今天的时间记录" );
                 //如果有今天的记录,增加阅读数
-                sql = "SELECT newsNumber FROM vitality WHERE userId=" + userId;
-                ResultSet resultSet1 = DBUtil.executeQuery(sql);
-                if (resultSet1.next()) {
-                    int newsNumber = resultSet1.getInt("newsNumber") + 1;
-                    sql = "UPDATE vitality SET newsNumber="+newsNumber;
-                    int test = DBUtil.executeUpdata(sql);
-                    if (test == 1){
-                        System.out.print("修改成功");
-                    }
-                }
-
-            } else {
-                //没有今天的记录，增加记录然后增加阅读数
-                sql = "INSERT INTO vitality" + " VALUES(" + userId + "," + time + "," + "1)";
+                int newsNumber = resultSet.getInt("newsNumber") + 1;
+                System.out.println("newsNumber" + newsNumber);
+                sql = "UPDATE vitality SET newsNumber="+newsNumber;
                 int test = DBUtil.executeUpdata(sql);
-                if (test == 1) {
+                if (test>0){
+                    System.out.print("修改成功"); }
+            } else {
+                System.out.println("没有今天的时间记录" );
+                //没有今天的记录，增加记录然后增加阅读数
+                sql = "INSERT INTO vitality" + " VALUES(" + userId + "," +'"'+ time +'"'+ "," + "1)";
+                System.out.print(sql);
+                int test = DBUtil.executeUpdata(sql);
+                if (test >0) {
                     System.out.print("插入数据成功");
                 }
             }
