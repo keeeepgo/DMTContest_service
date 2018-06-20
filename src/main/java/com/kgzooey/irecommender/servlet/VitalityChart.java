@@ -50,7 +50,8 @@ public class VitalityChart extends HttpServlet {
                     vitality.setDate(timeEnd);
                     int newsNumber;
                     //对比数据库获取的数据
-                    if (resultSet.getDate("date").equals(timeEnd)){
+                    String date = sdf.format(resultSet.getDate("date"));
+                    if (date.equals(timeEnd)){
                         newsNumber = resultSet.getInt("newsNumber");
                         vitality.setNewsNumber(newsNumber);
                         resultSet.next();
