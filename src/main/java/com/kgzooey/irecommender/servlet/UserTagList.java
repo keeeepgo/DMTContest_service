@@ -23,25 +23,24 @@ public class UserTagList extends HttpServlet {
             request.setCharacterEncoding("utf-8");
             String userId = request.getParameter("userId");
             String tagContent = request.getParameter("tagContent");
-            System.out.println(userId);
+            String sql_result = "上传失败";
             String sql =  "INSERT INTO tag(tagContent) VALUES( " +"'"+ tagContent+"'"+");";
-            System.out.println(sql);
-            DBUtil.executeUpdata(sql);
-
-            sql = "SELECT tagId FROM tag WHERE tagContent='"+ tagContent+"';";
-            ResultSet resultSet2 = DBUtil.executeQuery(sql);
-            resultSet2.next();
-            int tagId = resultSet2.getInt("tagId");
-
-            sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1)";
+            if(DBUtil.executeUpdata(sql)==1){
+                sql = "SELECT tagId FROM tag WHERE tagContent='"+ tagContent+"';";
+                ResultSet resultSet2 = DBUtil.executeQuery(sql);
+                resultSet2.next();
+                int tagId = resultSet2.getInt("tagId");
+                sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1)";
+                if(DBUtil.executeUpdata(sql)==1){
+                    sql_result = "上传成功";
+                }
+            }
 
             response.setHeader("Content-type", "text/html; charset=utf-8");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
             PrintWriter Writer_response = response.getWriter();
-
-            System.out.println("上传成功");
-            Writer_response.write("上传成功");
+            Writer_response.write(sql_result);
             DBUtil.close();
         }catch (Exception e){
             e.printStackTrace();

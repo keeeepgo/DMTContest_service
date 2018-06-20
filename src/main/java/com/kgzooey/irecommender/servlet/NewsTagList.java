@@ -37,7 +37,6 @@ public class NewsTagList extends HttpServlet {
                 temp.setTagId(resultSet.getInt("tagId"));
                 temp.setTagContent(resultSet.getString("tagContent"));
                 list.add(temp);
-                System.out.println(temp.getTagContent());
             }
 
 
@@ -45,7 +44,6 @@ public class NewsTagList extends HttpServlet {
 
             //Java集合转JSON
             String jsonlist = mapper.writeValueAsString(list);
-            System.out.print(jsonlist);
             response.setHeader("Content-type", "text/html; charset=utf-8");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Access-Control-Allow-Headers", "Authentication");
