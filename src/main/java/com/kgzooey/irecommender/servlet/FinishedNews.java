@@ -15,7 +15,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-@WebServlet(name = "FinishedNews")
+@WebServlet("/FinishedNews")
 public class FinishedNews extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
@@ -23,20 +23,27 @@ public class FinishedNews extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //增加阅读记录
+        String userId = request.getParameter("userId");
+        String newsId = request.getParameter("newsId");
         try {
-            String userId = request.getParameter("userId");
-            String newsId = request.getParameter("newsId");
+
             Calendar now = Calendar.getInstance();
             int year = now.get(Calendar.YEAR);
             int month = now.get(Calendar.MONTH) + 1;
             int day = now.get(Calendar.DAY_OF_MONTH);
-            String time = year + "-" + month + "-" + day;
+            String time;
+            if(month<10) {
+                time = year + "-0" + month + "-" + day;
+            }else {
+                time = year + "-" + month + "-" + day;
+            }
             System.out.print("当前时间:" + time);
             String sql = "SELECT date FROM vitality WHERE date =" + time;
             ResultSet resultSet = DBUtil.executeQuery(sql);
             System.out.print("当前时间搜索的返回：" + resultSet);
             if (resultSet.next()) {
-                //增加阅读数
+                //如果有今天的记录,增加阅读数
                 sql = "SELECT newsNumber FROM vitality WHERE userId=" + userId;
                 ResultSet resultSet1 = DBUtil.executeQuery(sql);
                 if (resultSet1.next()) {
@@ -60,6 +67,7 @@ public class FinishedNews extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //更改阅读状态
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
