@@ -1,5 +1,5 @@
 package com.kgzooey.irecommender.servlet;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgzooey.irecommender.models.Vitality;
 
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-@WebServlet(name = "VitalityChart")
+@WebServlet("/VitalityChart")
 public class VitalityChart extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -62,6 +62,7 @@ public class VitalityChart extends HttpServlet {
                 }
             }
 
+            ObjectMapper mapper = new ObjectMapper();
             //Java集合转JSON
             String jsonlist = mapper.writeValueAsString(list);
             System.out.print(jsonlist);
