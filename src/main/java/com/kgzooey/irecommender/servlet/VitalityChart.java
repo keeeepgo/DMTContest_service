@@ -28,16 +28,9 @@ public class VitalityChart extends HttpServlet {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Calendar now = Calendar.getInstance();
             int year = now.get(Calendar.YEAR);
-            int month = now.get(Calendar.MONTH) + 1;
-            int day = now.get(Calendar.DAY_OF_MONTH) + 1;
-            String time;
-            if(month<10) {
-                time = year + "-0" + month + "-" + day;
-            }else {
-                time = year + "-" + month + "-" + day;
-            }
+            String time = year+"";
             Date d1 = sdf.parse(year+"-01-01");//定义起始日期
-            Date d2 = sdf.parse(time);//定义结束日期
+            Date d2 = sdf.parse(year+1+"-01-01");//定义结束日期
             Calendar dd = Calendar.getInstance();//定义日期实例
             dd.setTime(d1);//设置日期起始时间
 
