@@ -1,10 +1,8 @@
 package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.Note;
-import com.kgzooey.irecommender.servlet.DBUtil;
+import com.kgzooey.irecommender.models.NoteBean;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -48,7 +46,7 @@ public class NoteList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<Note> list = new ArrayList<Note>();
+            List<NoteBean> list = new ArrayList<NoteBean>();
             String userId = request.getParameter("userId");
             String sql = " SELECT noteId,noteDate,noteContent FROM note "
                     + " WHERE userId="+userId + " ORDER BY noteDate";
@@ -56,7 +54,7 @@ public class NoteList extends HttpServlet {
             ResultSet resultSet = DBUtil.executeQuery(sql);
 
             while (resultSet.next()){
-                Note temp = new Note();
+                NoteBean temp = new NoteBean();
                 temp.setNoteId(resultSet.getInt("noteId"));
                 temp.setNoteDate(resultSet.getDate("noteDate"));
                 temp.setNoteContent(resultSet.getString("noteContent"));

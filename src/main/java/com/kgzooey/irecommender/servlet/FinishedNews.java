@@ -27,7 +27,7 @@ public class FinishedNews extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userId = request.getParameter("userId");
         String newsId = request.getParameter("newsId");
-        String grade = request.getParameter("grade");
+        String grade = request.getParameter("newsGrade");
         try {
             //对文章阅读数的处理
             Calendar now = Calendar.getInstance();
@@ -48,9 +48,9 @@ public class FinishedNews extends HttpServlet {
             if (resultSet.next()) {
                 System.out.println("有今天的时间记录" );
                 //如果有今天的记录,增加阅读数
-                int newsNumber = resultSet.getInt("newsNumber") + 1;
-                System.out.println("newsNumber" + newsNumber);
-                sql = "UPDATE vitality SET newsNumber="+newsNumber;
+                int newsAmount = resultSet.getInt("newsAmount") + 1;
+                System.out.println("newsAmount" + newsAmount);
+                sql = "UPDATE vitality SET newsAmount="+newsAmount;
                 int test = DBUtil.executeUpdata(sql);
                 if (test>0){
                     System.out.print("修改成功"); }

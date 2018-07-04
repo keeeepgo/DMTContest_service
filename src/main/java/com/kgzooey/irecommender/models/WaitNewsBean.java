@@ -1,10 +1,9 @@
 package com.kgzooey.irecommender.models;
 
-public class WaitNews {
+public class WaitNewsBean {
     private int newsId;
     private String newsTitle;
     private int userId;
-    private int grade;
     private int readStatus;
 
     public int getNewsId() {
@@ -29,14 +28,6 @@ public class WaitNews {
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    public int getGrade() {
-        return grade;
     }
 
     public void setReadStatus(int readStatus) {

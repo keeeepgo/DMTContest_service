@@ -1,6 +1,6 @@
 package com.kgzooey.irecommender.models;
 
-public class RecommendNews {
+public class RecommendNewsBean {
 
     int newsId;
     String newsTitle;

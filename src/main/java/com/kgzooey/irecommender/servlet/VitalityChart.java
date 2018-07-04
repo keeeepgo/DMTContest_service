@@ -1,6 +1,6 @@
 package com.kgzooey.irecommender.servlet;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.Vitality;
+import com.kgzooey.irecommender.models.VitalityBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class VitalityChart extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String userId = request.getParameter("userId");
-            String sql = "SELECT date,newsNumber FROM vitality WHERE userId=" + userId;
+            String sql = "SELECT date,newsCount FROM vitality WHERE userId=" + userId;
             ResultSet resultSet = DBUtil.executeQuery(sql);
             //获取今天的时间,设定开始/结束日期
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -34,24 +34,24 @@ public class VitalityChart extends HttpServlet {
             Calendar dd = Calendar.getInstance();//定义日期实例
             dd.setTime(d1);//设置日期起始时间
 
-            List<Vitality> list = new ArrayList<Vitality>();
+            List<VitalityBean> list = new ArrayList<VitalityBean>();
             //数据库获取了数据则开始比较
             if(resultSet.next()){
                 while(dd.getTime().before(d2)){//判断是否到结束日期
                     String timeEnd = sdf.format(dd.getTime());
-                    Vitality vitality = new Vitality();
-                    vitality.setDate(timeEnd);
-                    int newsNumber;
+                    VitalityBean vitalityBean = new VitalityBean();
+                    vitalityBean.setDate(timeEnd);
+                    int newsCount;
                     //对比数据库获取的数据
                     String date = sdf.format(resultSet.getDate("date"));
                     if (date.equals(timeEnd)){
-                        newsNumber = resultSet.getInt("newsNumber");
-                        vitality.setNewsNumber(newsNumber);
+                        newsCount = resultSet.getInt("newsCount");
+                        vitalityBean.setNewsCount(newsCount);
                         resultSet.next();
                     }else {
-                        vitality.setNewsNumber(0);
+                        vitalityBean.setNewsCount(0);
                     }
-                    list.add(vitality);
+                    list.add(vitalityBean);
                     dd.add(Calendar.DATE, 1);//进行当前日期加1
                 }
             }

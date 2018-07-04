@@ -2,7 +2,7 @@ package com.kgzooey.irecommender.models;
 
 import java.sql.Date;
 
-public class Note {
+public class NoteBean {
     int noteId;
     Date noteDate;
     String noteContent;

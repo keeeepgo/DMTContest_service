@@ -1,6 +1,6 @@
 package com.kgzooey.irecommender.models;
 
-public class User {
+public class UserBean {
     String userId;
     String userAccount;
     String userPassword;

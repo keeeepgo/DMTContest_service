@@ -1,7 +1,7 @@
 package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.RecommendNews;
+import com.kgzooey.irecommender.models.RecommendNewsBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,10 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +21,15 @@ public class RecommendNewsList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<RecommendNews> list = new ArrayList<RecommendNews>();
+            List<RecommendNewsBean> list = new ArrayList<RecommendNewsBean>();
             String userId = request.getParameter("userId");
             String sql = "SELECT news.newsId,newsTitle,newsContent FROM user_news_rec,news"
                     + " WHERE user_news_rec.newsId=news.newsId"
                     + " AND userId="+userId
-                    + " ORDER BY user_news_rec.score DESC";
+                    + " ORDER BY user_news_rec.recommendScore DESC";
             ResultSet resultSet = DBUtil.executeQuery(sql);
             while (resultSet.next()){
-                RecommendNews temp = new RecommendNews();
+                RecommendNewsBean temp = new RecommendNewsBean();
                 temp.setNewsId(resultSet.getInt("newsId"));
                 temp.setNewsTitle(resultSet.getString("newsTitle"));
                 list.add(temp);

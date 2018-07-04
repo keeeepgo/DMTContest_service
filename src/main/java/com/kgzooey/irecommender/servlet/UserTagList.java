@@ -1,10 +1,8 @@
 package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.UserTag;
-import com.kgzooey.irecommender.servlet.DBUtil;
+import com.kgzooey.irecommender.models.UserTagBean;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +28,7 @@ public class UserTagList extends HttpServlet {
                 ResultSet resultSet2 = DBUtil.executeQuery(sql);
                 resultSet2.next();
                 int tagId = resultSet2.getInt("tagId");
-                sql = "INSERT INTO user_tag(userId,tagId,weight) VALUES("+userId+","+tagId+","+"0.1)";
+                sql = "INSERT INTO user_tag(userId,tagId,tagWeight) VALUES("+userId+","+tagId+","+"0.1)";
                 if(DBUtil.executeUpdata(sql)==1){
                     sql_result = "上传成功";
                 }
@@ -49,16 +47,16 @@ public class UserTagList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<UserTag> list = new ArrayList<UserTag>();
+            List<UserTagBean> list = new ArrayList<UserTagBean>();
             String userId = request.getParameter("userId");
             String sql = "SELECT tag.tagId,tagContent FROM user_tag,tag "
                     + "WHERE user_tag.tagId=tag.tagId "
-                    + "AND userId="+userId + " ORDER BY user_tag.weight DESC";
+                    + "AND userId="+userId + " ORDER BY user_tag.tagWeight DESC";
 
             ResultSet resultSet = DBUtil.executeQuery(sql);
 
             while (resultSet.next()){
-                UserTag temp = new UserTag();
+                UserTagBean temp = new UserTagBean();
                 temp.setTagId(resultSet.getInt("tagId"));
                 temp.setTagContent(resultSet.getString("tagContent"));
                 list.add(temp);

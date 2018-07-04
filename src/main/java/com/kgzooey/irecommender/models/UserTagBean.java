@@ -1,6 +1,6 @@
 package com.kgzooey.irecommender.models;
 
-public class UserTag {
+public class UserTagBean {
     int tagId;
     String tagContent;
 
