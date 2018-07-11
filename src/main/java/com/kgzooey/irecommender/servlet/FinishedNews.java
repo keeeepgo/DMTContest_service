@@ -43,14 +43,14 @@ public class FinishedNews extends HttpServlet {
                 time = year + "-" + month + "-0" + day;
             }
             System.out.println("当前时间:" + time);
-            String sql = "SELECT * FROM vitality WHERE date =" +'"'+ time +'"';
+            String sql = "SELECT * FROM vitality WHERE date =" +"'"+ time +"' AND userId="+userId;
             ResultSet resultSet = DBUtil.executeQuery(sql);
             if (resultSet.next()) {
                 System.out.println("有今天的时间记录" );
                 //如果有今天的记录,增加阅读数
                 int newsAmount = resultSet.getInt("newsAmount") + 1;
                 System.out.println("newsAmount" + newsAmount);
-                sql = "UPDATE vitality SET newsAmount="+newsAmount;
+                sql = "UPDATE vitality SET newsAmount="+newsAmount+" WHERE date =" +"'"+ time +"' AND userId = "+userId;
                 int test = DBUtil.executeUpdata(sql);
                 if (test>0){
                     System.out.print("修改成功"); }

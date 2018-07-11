@@ -22,7 +22,7 @@ public class VitalityChart extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             String userId = request.getParameter("userId");
-            String sql = "SELECT date,newsCount FROM vitality WHERE userId=" + userId;
+            String sql = "SELECT date,newsAmount FROM vitality WHERE userId=" + userId;
             ResultSet resultSet = DBUtil.executeQuery(sql);
             //获取今天的时间,设定开始/结束日期
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -41,15 +41,15 @@ public class VitalityChart extends HttpServlet {
                     String timeEnd = sdf.format(dd.getTime());
                     VitalityBean vitalityBean = new VitalityBean();
                     vitalityBean.setDate(timeEnd);
-                    int newsCount;
+                    int newsAmount;
                     //对比数据库获取的数据
                     String date = sdf.format(resultSet.getDate("date"));
                     if (date.equals(timeEnd)){
-                        newsCount = resultSet.getInt("newsCount");
-                        vitalityBean.setNewsCount(newsCount);
+                        newsAmount = resultSet.getInt("newsAmount");
+                        vitalityBean.setNewsAmount(newsAmount);
                         resultSet.next();
                     }else {
-                        vitalityBean.setNewsCount(0);
+                        vitalityBean.setNewsAmount(0);
                     }
                     list.add(vitalityBean);
                     dd.add(Calendar.DATE, 1);//进行当前日期加1

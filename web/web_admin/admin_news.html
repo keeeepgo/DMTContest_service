@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
+        <title>
+            后台管理界面-irecommender
+        </title>
+        <link href="layui/css/layui.css" media="all" rel="stylesheet" type="text/css"/>
+        <link href="css/hosttable.css" rel="stylesheet"/>
+        <script src="js/jquery-3.3.1.js">
+        </script>
+        <script src="layui/layui.js">
+        </script>
+        <script src="js/admin_news.js">
+        </script>
+    </head>
+    <body class="layui-layout-body">
+        <div class="layui-layout layui-layout-admin">
+            <div class="layui-header">
+                <div class="layui-logo">
+                    后台管理
+                </div>
+                <!-- 头部区域（可配合layui已有的水平导航） -->
+                <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item">
+                        <img class="layui-nav-img" src="images/default.jpg">
+                            管理员
+                        </img>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="index.html">
+                            退出
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="layui-side layui-bg-black">
+                <div class="layui-side-scroll">
+                    <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                        <li class="layui-nav-item">
+                            <a href="admin_users.html">
+                                用户管理
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="admin_news.html">
+                                资讯管理
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="admin_tags.html">
+                                标签管理
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="">
+                                问题申报
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="">
+                                使用帮助
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="">
+                                关于
+                            </a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">
+                                其它系统
+                            </a>
+                            <dl class="layui-nav-child">
+                                <dd>
+                                    <a href="">
+                                        消息管理
+                                    </a>
+                                </dd>
+                                <dd>
+                                    <a href="">
+                                        授权管理
+                                    </a>
+                                </dd>
+                            </dl>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="layui-body">
+                <!-- 内容主体区域 -->
+                <fieldset class="layui-elem-field">
+                    <legend>
+                        资讯列表
+                    </legend>
+                    <button class="layui-btn layui-btn-radius layui-btn-normal" id="fresh" style="margin-left: 20px;margin-top: 20px">
+                        <i class="layui-icon layui-anim layui-anim-rotate">
+                            ဂ
+                        </i>
+                        刷新
+                    </button>
+                    <button class="layui-btn layui-btn-radius" id="search" style="margin-left: 20px;margin-top: 20px">
+                        <i class="layui-icon layui-anim layui-anim-scale">
+                            
+                        </i>
+                        智能全局搜索
+                    </button>
+                    <div class="layui-input-inline" style="margin-top: 20px">
+                        <input class="layui-input" id="searchinput" placeholder="请输入关键字" type="text" value="">
+                        </input>
+                    </div>
+                    <button class="layui-btn layui-btn-radius" id="searchdate" style="margin-left: 20px;margin-top: 20px">
+                        <i class="layui-icon layui-anim layui-anim-scale">
+                            
+                        </i>
+                        筛选日期
+                    </button>
+                    <div class="layui-input-inline" style="margin-top: 20px">
+                        <input class="layui-input" id="searchdateinput" placeholder="请输入想查找的日期" type="text" value=""/>
+                    </div>
+                    <div class="layui-field-box" id="people-show">
+                        <table class="layui-table" id="people-table" lay-filter="demo" lay-size="lg">
+                        </table>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="layui-footer">
+                <!-- 底部固定区域 -->
+                版权所有 © coldcode 浙ICP备666号 地址：XXXXX 邮编：XXXXX
+            </div>
+        </div>
+        <script id="bar" type="text/html">
+            <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">详情</a>
+            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="row-del" disabled="true">删除</a>
+        </script>
+    </body>
+</html>

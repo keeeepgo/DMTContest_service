@@ -1,7 +1,7 @@
 package com.kgzooey.irecommender.servlet;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgzooey.irecommender.models.UserTagBean;
+import com.kgzooey.irecommender.models.TagBean;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 @WebServlet("/UserTagList")
@@ -21,8 +23,11 @@ public class UserTagList extends HttpServlet {
             request.setCharacterEncoding("utf-8");
             String userId = request.getParameter("userId");
             String tagContent = request.getParameter("tagContent");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String today = sdf.format(Calendar.getInstance().getTime());
+
             String sql_result = "上传失败";
-            String sql =  "INSERT INTO tag(tagContent) VALUES( " +"'"+ tagContent+"'"+");";
+            String sql =  "INSERT INTO tag(tagContent,tagDate) VALUES( " +"'"+ tagContent+"'"+","+today+");";
             if(DBUtil.executeUpdata(sql)==1){
                 sql = "SELECT tagId FROM tag WHERE tagContent='"+ tagContent+"';";
                 ResultSet resultSet2 = DBUtil.executeQuery(sql);
@@ -47,7 +52,7 @@ public class UserTagList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<UserTagBean> list = new ArrayList<UserTagBean>();
+            List<TagBean> list = new ArrayList<TagBean>();
             String userId = request.getParameter("userId");
             String sql = "SELECT tag.tagId,tagContent FROM user_tag,tag "
                     + "WHERE user_tag.tagId=tag.tagId "
@@ -56,7 +61,7 @@ public class UserTagList extends HttpServlet {
             ResultSet resultSet = DBUtil.executeQuery(sql);
 
             while (resultSet.next()){
-                UserTagBean temp = new UserTagBean();
+                TagBean temp = new TagBean();
                 temp.setTagId(resultSet.getInt("tagId"));
                 temp.setTagContent(resultSet.getString("tagContent"));
                 list.add(temp);
@@ -82,6 +87,7 @@ public class UserTagList extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doDelete(req, resp);
         try {
             int userId = Integer.parseInt(req.getParameter("userId"));
             int tagId = Integer.parseInt(req.getParameter("tagId"));

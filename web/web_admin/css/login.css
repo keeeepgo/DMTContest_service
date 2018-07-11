@@ -1,0 +1,24 @@
+.login-box {
+  float: left;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 100px;
+  position: relative;
+}
+.login-box form {
+  clear: left;
+  float: left;
+  position: relative;
+  left: 50%;/*整个分页向右边移动宽度的50%*/
+  text-align: center;
+}
+.login-box .layui-form-item{
+ line-height: 25px; 
+ margin: 0 5px; 
+ display: block; 
+ float: middle; 
+ position: relative; 
+ right: 50%;/*将每个分页项向左边移动宽度的50%*/
+ line-height: 150px;
+}
+

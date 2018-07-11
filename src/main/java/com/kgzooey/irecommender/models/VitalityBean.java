@@ -2,7 +2,15 @@ package com.kgzooey.irecommender.models;
 
 public class VitalityBean {
     private String date;
-    private int newsCount;
+    private int newsAmount;
+
+    public int getNewsAmount() {
+        return newsAmount;
+    }
+
+    public void setNewsAmount(int newsAmount) {
+        this.newsAmount = newsAmount;
+    }
 
     public void setDate(String date) {
         this.date = date;
@@ -12,11 +20,5 @@ public class VitalityBean {
         return date;
     }
 
-    public void setNewsCount(int newsCount) {
-        this.newsCount = newsCount;
-    }
 
-    public int getNewsCount() {
-        return newsCount;
-    }
 }

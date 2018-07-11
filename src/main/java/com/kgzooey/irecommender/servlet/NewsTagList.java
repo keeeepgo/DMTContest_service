@@ -1,7 +1,7 @@
 package com.kgzooey.irecommender.servlet;
 
         import com.fasterxml.jackson.databind.ObjectMapper;
-        import com.kgzooey.irecommender.models.NewsTagBean;
+        import com.kgzooey.irecommender.models.TagBean;
 
         import javax.servlet.ServletException;
         import javax.servlet.annotation.WebServlet;
@@ -22,7 +22,7 @@ public class NewsTagList extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            List<NewsTagBean> list = new ArrayList<NewsTagBean>();
+            List<TagBean> list = new ArrayList<TagBean>();
             String newsId = request.getParameter("newsId");
             String sql = " SELECT tag.tagId,tag.tagContent FROM tag,news_tag "
                     + " WHERE tag.tagId=news_tag.tagId AND newsId="+newsId;
@@ -30,7 +30,7 @@ public class NewsTagList extends HttpServlet {
             ResultSet resultSet = DBUtil.executeQuery(sql);
 
             while (resultSet.next()){
-                NewsTagBean temp = new NewsTagBean();
+                TagBean temp = new TagBean();
                 temp.setTagId(resultSet.getInt("tagId"));
                 temp.setTagContent(resultSet.getString("tagContent"));
                 list.add(temp);

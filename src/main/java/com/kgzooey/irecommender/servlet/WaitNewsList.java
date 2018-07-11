@@ -17,25 +17,32 @@ import java.util.List;
 @WebServlet("/WaitNewsList")
 public class WaitNewsList extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userId = request.getParameter("userId");
+        String newsId = request.getParameter("newsId");
+        String sql_result = "添加失败";
+        String sql = "SELECT * FROM read_record WHERE userId= "+userId+" AND newsId= "+newsId;
         try {
-            String userId = request.getParameter("userId");
-            String newsId = request.getParameter("newsId");
-            String sql_result = "添加失败";
-            String sql = " UPDATE read_record SET readStatus=" +userId
+            ResultSet resultSet = DBUtil.executeQuery(sql);
+            if(resultSet.next()){
+                sql = " UPDATE read_record SET readStatus=1"
                         +" WHERE userId= "+userId+" AND newsId= "+newsId;
-            if(DBUtil.executeUpdata(sql)==1) {
-                sql_result = "添加成功";
+                if(DBUtil.executeUpdata(sql)==1) {
+                    sql_result = "添加成功";
+                }
+            }else{
+                sql = "INSERT INTO read_record VALUES("+userId+","+newsId+",3,1"+")";
+                if(DBUtil.executeUpdata(sql)==1) {
+                    sql_result = "添加成功";
+                }
             }
-
-            DBUtil.close();
-            response.setHeader("Content-type", "text/html; charset=utf-8");
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Access-Control-Allow-Headers", "Authentication");
-            response.getWriter().write(sql_result);
-
         }catch (Exception e){
             e.printStackTrace();
         }
+        DBUtil.close();
+        response.setHeader("Content-type", "text/html; charset=utf-8");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Authentication");
+        response.getWriter().write(sql_result);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
