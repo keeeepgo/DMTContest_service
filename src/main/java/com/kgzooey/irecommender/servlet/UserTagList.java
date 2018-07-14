@@ -27,7 +27,7 @@ public class UserTagList extends HttpServlet {
             String today = sdf.format(Calendar.getInstance().getTime());
 
             String sql_result = "上传失败";
-            String sql =  "INSERT INTO tag(tagContent,tagDate) VALUES( " +"'"+ tagContent+"'"+","+today+");";
+            String sql =  "INSERT INTO tag(tagContent,tagDate) VALUES( " +"'"+ tagContent+"'"+",'"+today+"');";
             if(DBUtil.executeUpdata(sql)==1){
                 sql = "SELECT tagId FROM tag WHERE tagContent='"+ tagContent+"';";
                 ResultSet resultSet2 = DBUtil.executeQuery(sql);
@@ -87,14 +87,12 @@ public class UserTagList extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doDelete(req, resp);
+        //super.doDelete(req, resp);
         try {
-            int userId = Integer.parseInt(req.getParameter("userId"));
-            int tagId = Integer.parseInt(req.getParameter("tagId"));
+            String userId = req.getParameter("userId");
+            String tagId = req.getParameter("tagId");
             String sql = "DELETE FROM user_tag WHERE userId=" + userId + " AND tagId=" + tagId;
-            System.out.println(sql);
             int temp = DBUtil.executeUpdata(sql);
-            System.out.println(temp);
             resp.setHeader("Content-type", "text/html; charset=utf-8");
             resp.setHeader("Access-Control-Allow-Origin", "*");
             resp.setHeader("Access-Control-Allow-Headers", "Authentication");

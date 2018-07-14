@@ -1,0 +1,85 @@
+
+#taglist {
+    margin: 5px;
+    padding: 2vh 3vh 3vh;
+    width: 100%;
+    height: 100%;
+    background: #353441;
+    color: #FFF;
+}
+
+#taglist h1 {
+    /*text-align:center;*/
+    font-weight: normal;
+    font-size: 5vh;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255, 255, 255, .3);
+}
+
+#taglist .emptylist {
+    margin-top: 2.6vh;
+    text-align: center;
+    letter-spacing: .05em;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+#taglist ul {
+    margin-top: 2.6vh;
+    list-style: none;
+}
+
+#taglist li {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -3vh 4px;
+    padding: 1.1vh 3vh;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#taglist .actions {
+    flex-shrink: 1;
+    padding-left: 0.7em;
+}
+
+#taglist .date{
+    flex-shrink: 1;
+    font-size: 2vh;
+    padding-right: 1em;
+}
+
+#taglist .label {
+    flex-shrink: 1;
+    position: relative;
+    transition: opacity .2s linear;
+}
+
+#taglist .description {
+    width: 100%;
+}
+
+#taglist .done .label {
+    opacity: .6;
+}
+
+#taglist .done .label:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -.5vh;
+    display: block;
+    width: 0%;
+    height: 1px;
+    background: #FFF;
+    animation: strikeitem .3s ease-out 0s forwards;
+}
+
+#taglist .btn-picto {
+    border: none;
+    background: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    color: #FFF;
+}

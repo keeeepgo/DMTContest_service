@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>登录注册</title>
+  <link rel="stylesheet" href="css/login_signup.css">
+</head>
+
+<body>
+  <div class="cont_principal">
+    <div class="cont_centrar">
+      <div class="cont_login">
+        <div class="cont_info_log_sign_up">
+          <div class="col_md_login">
+            <div class="cont_ba_opcitiy">
+              <h2>登录</h2>
+              <p>用账号密码登录</p>
+              <button class="btn_login" onClick="cambiar_login()">登录</button>
+            </div>
+          </div>
+          <div class="col_md_sign_up">
+            <div class="cont_ba_opcitiy">
+              <h2>注册</h2>
+              <p>注册新的账号</p>
+              <button class="btn_sign_up" onClick="cambiar_sign_up()">注册</button>
+            </div>
+          </div>
+        </div>
+        <div class="cont_back_info">
+          <div class="cont_img_back_grey">
+            <img src="images/login_signup_bg.jpg" alt="" /> </div>
+        </div>
+        <div class="cont_forms">
+          <div class="cont_img_back_">
+            <img src="images/login_signup_bg.jpg" alt="" /> </div>
+          <div class="cont_form_login">
+            <h2>登录</h2>
+            <form method="POST" action="http://localhost:8080/User">
+              <input type="text" name="userId" placeholder="账号" />
+              <input type="password" name="userPassword" placeholder="密码" />
+              <input type="hidden" name="actionType" value="login"/>
+              <button class="btn_login" type="submit">登录</button>
+            </form>
+          </div>
+          <div class="cont_form_sign_up">
+            <h2>注册</h2>
+            <form method="POST" action="http://localhost:8080/User">
+              <input type="text" name="userId" placeholder="账号" />
+              <input type="text" name="userName" placeholder="用户名" />
+              <input type="password" name="userPassword" placeholder="密码" />
+              <input type="password" placeholder="确认密码" />
+              <input type="hidden" name="actionType" value="signup"/>
+              <button class="btn_sign_up" type="submit">注册</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/login_signup.js"></script>
+
+</body>
+
+</html>

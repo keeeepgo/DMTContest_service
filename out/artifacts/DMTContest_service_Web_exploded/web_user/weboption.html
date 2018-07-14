@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>个人设置</title>
+
+	<link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/homepage.css" />
+	<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+	<link rel="stylesheet" href="iconfont/material-icons.css" />
+	<link rel="stylesheet" href="css/markdown.css" />
+
+	<script src="js/jquery-3.3.1.js"></script>
+	<script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+	<script type="text/javascript" src="layui/layui.js"></script>
+
+
+	<script type="text/javascript">
+		layui.use(['form', 'layedit', 'laydate'], function () {
+			var form = layui.form,
+				layer = layui.layer,
+				layedit = layui.layedit,
+				laydate = layui.laydate;
+
+			//时间选择器
+			laydate.render({
+				elem: '#news_time',
+				type: 'time'
+			});
+
+		});
+
+		layui.use('rate', function () {
+			var rate = layui.rate;
+
+			//渲染
+			var ins1 = rate.render({
+				elem: '#feeling_score' //绑定元素
+			});
+		});
+	</script>
+	<style type="text/css">
+		fieldset {
+			padding: .35em .625em .75em;
+			margin: 0 2px;
+			border: 1px solid silver
+		}
+
+		legend {
+			padding: .5em;
+			border: 0;
+			width: auto
+		}
+
+		.row {
+			box-shadow: 0 0 50px 0 rgba(0, 0, 0, .25);
+		}
+
+		.row:after {
+			content: "";
+			clear: both;
+			display: block;
+			height: auto;
+		}
+
+		layui-form-label {
+			width: 100px;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div id="top"></div>
+	<nav class="menu-activea">
+		<h1>Menu</h1>
+		<ul>
+			<li>
+				<b>
+					<a href="homepage.html">资讯</a>
+				</b>
+			</li>
+			<hr>
+			<li>
+				<b>
+					<a href="notelists.html">笔记</a>
+				</b>
+			</li>
+			<hr>
+			<li>
+				<b>
+					<a href="editnote.html">编辑</a>
+				</b>
+			</li>
+			<hr>
+			<li>
+				<b>
+					<a href="weboption.html">设置</a>
+				</b>
+			</li>
+			<hr>
+		</ul>
+	</nav>
+	<main id="Main">
+		<section id="editnotepage">
+			<div class="row">
+				<div class="col-md-6 col-md-offset-3" style="background-color: white;">
+					<div class="col-md-12" style="background-color: white;">
+						<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+							<legend>设置</legend>
+						</fieldset>
+						<form class="layui-form" action="">
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>每日资讯数</legend>
+								</fieldset>
+								<div class="layui-input-block">
+									<select name="interest" lay-filter="aihao">
+										<option value="">每天推荐的资讯数量</option>
+										<option value="1">10</option>
+										<option value="2">20</option>
+										<option value="3">30</option>
+										<option value="4">40</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>资讯推送时间</legend>
+								</fieldset>
+								<div class="layui-input-block">
+									<input type="text" class="layui-input" id="news_time" placeholder="每天什么时间更新推荐资讯列表？">
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>推荐标准篇数</legend>
+								</fieldset>
+								<div class="layui-input-block">
+									<select name="interest" lay-filter="aihao">
+										<option value="">以近期看过的多少篇资讯为推荐标准？</option>
+										<option value="5">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>个人标签数</legend>
+								</fieldset>
+								<div class="layui-input-block">
+									<select name="interest" lay-filter="aihao">
+										<option value="">允许推荐系统用多少标签来描述自己？</option>
+										<option value="5">5</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="10">10</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>喜欢标准标签数</legend>
+								</fieldset>
+								<div class="layui-input-block">
+									<select name="interest" lay-filter="aihao">
+										<option value="">一个标签出现多少次才能被认为是喜欢的标签</option>
+										<option value="5">5</option>
+										<option value="10">10</option>
+										<option value="15">15</option>
+										<option value="20">20</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>允许阅读数据被用来完善推荐功能</legend>
+								</fieldset>
+								<div class="layui-input-block">
+									<input type="checkbox" name="close" lay-skin="switch" lay-text="ON|OFF">
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+									<legend>体验评分</legend>
+								</fieldset>
+								<div class="layui-input-block" id="feeling_score">
+								</div>
+							</div>
+
+							<div class="layui-form-item">
+								<div class="layui-input-block">
+									<button class="layui-btn" lay-submit="" lay-filter="demo1">确认修改</button>
+									<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<script>
+		function getUserId(){
+			var userId;
+			$.ajax({
+				url: "http://localhost:8080/User",
+				type: "GET",
+				async: false,
+				success: function(XHR){
+					userId = XHR;
+					
+					if(userId == null){	
+						alert("您尚未登录，请登录");
+						window.location.href="login_signup.html";
+					}
+				},
+				error: function(){
+					alert("您尚未登录，请登录");
+					window.location.href="login_signup.html";
+				}
+			});
+			return userId;
+		}
+		var userId = getUserId();
+	</script>
+	<script src="js/homepage.js"></script>
+	<script src="js/marked.js"></script>
+	<script src="ace/ace.js"></script>
+
+
+</body>
+
+</html>

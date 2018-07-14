@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        登陆
+    </title>
+    <link href="layui/css/layui.css" rel="stylesheet" />
+    <link href="css/login.css" rel="stylesheet" />
+    <script src="js/jquery-3.3.1.js">
+    </script>
+    <script src="layui/layui.js">
+    </script>
+</head>
+
+<body class="login-body body">
+        
+    <fieldset class="login-box layui-elem-field">
+            <form method="POST" action="http://localhost:8080/Administer">
+        <legend class="layui-form-item">
+            irecommender后台管理系统业登录页面
+        </legend>
+        <div class="layui-field-box">
+            
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        账号：
+                    </label>
+                    <div class="layui-input-inline">
+                        <input autocomplete="on" class="layui-input" id="id" lay-verify="required|account" maxlength="20" name="adminId" type="text"
+                        />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">
+                        密码：
+                    </label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input" lay-verify="required|password" maxlength="20" name="adminPassword" type="password" />
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-danger btn-reset" type="reset">
+                        重置
+                    </button>
+                    <button class="layui-btn btn-submit" lay-filter="sub" lay-submit="" type="submit">
+                        立即登录
+                    </button>
+                </div>
+            
+        </div>
+    </form>
+    </fieldset>
+</body>
+
+</html>

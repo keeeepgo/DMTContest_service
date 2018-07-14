@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/homepage.css" />
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+    <link rel="stylesheet" href="iconfont/material-icons.css" />
+    <link rel="stylesheet" type="text/css" href="css/vuelist.css" />
+    <link rel="stylesheet" type="text/css" href="css/note.css" />
+    <link rel="stylesheet" href="css/markdown.css" />
+
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <style type="text/css">
+        .row {
+            box-shadow: 0 0 50px 0 rgba(0, 0, 0, .25);
+        }
+
+        .row:after {
+            content: "";
+            clear: both;
+            display: block;
+            height: auto;
+        }
+
+        .sidemovein {
+            -webkit-transform: translateX(1200px) rotateY(-45deg);
+            transform: translateX(1200px) rotateY(-45deg);
+        }
+
+        .sidemoveout {
+            -webkit-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+        }
+
+        circle {
+            -webkit-transition: stroke-dasharray .25s;
+            transition: stroke-dasharray .25s;
+        }
+
+        .titlemovedown {
+            position: fixed;
+            top: 10px;
+            background-color: white;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="top"></div>
+    <nav class="menu-activea">
+        <h1>Menu</h1>
+        <ul>
+            <li>
+                <b>
+                    <a href="homepage.html">资讯</a>
+                </b>
+            </li>
+            <hr>
+            <li>
+                <b>
+                    <a href="notelists.html">笔记</a>
+                </b>
+            </li>
+            <hr>
+            <li>
+                <b>
+                    <a href="editnote.html">编辑</a>
+                </b>
+            </li>
+            <hr>
+            <li>
+                <b>
+                    <a href="weboption.html">设置</a>
+                </b>
+            </li>
+            <hr>
+        </ul>
+    </nav>
+    <main id="Main">
+        <section id="notepage">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="vuelist" id="notelist">
+                        <h1>笔记列表</h1>
+                        <template v-if="todo.length">
+                            <ul id="notelist_ul">
+                                <li stagger="5000" v-bind:class="item.done ? 'done' : ''" v-for="item in todoByStatus">
+                                    <span class="label" style="display: -webkit-box;
+                                    -webkit-box-orient: vertical;
+                                    -webkit-line-clamp: 3;
+                                    overflow: hidden;" v-bind:aria-label="item.done ? 'Undone' : 'Done'" v-bind:title="item.done ? 'Undone' : 'Done'"
+                                        v-on:click="markAsDoneOrUndone(item);changeReadNow(item)">{{item.noteContent}}</span>
+                                    <span class="noteDate_span" style="position: absolute;right: 2px;">{{item.noteDate}}</span>
+                                </li>
+                            </ul>
+                            <togglebutton label="移动已看文章" name="movedone" v-on:clicked="movedonetoogle"></togglebutton>
+                            <togglebutton label="按日期排序(降序)" name="moveDate" v-on:clicked="moveDatetoogle"></togglebutton>
+                            <togglebutton label="日期标签显示在上方" name="dateTitleShow" v-on:clicked="dateTitleShowtoogle"></togglebutton>
+                        </template>
+                        <p class="emptylist" v-else="">列表是空的。</p>
+                    </div>
+                </div>
+                <div class="noteborder col-md-8 " style="padding-right:7rem;margin-left: 15px;">
+                    <div id="note_content" class="markdown-body">
+                        笔记内容
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+	<script>
+		function getUserId(){
+			var userId;
+			$.ajax({
+				url: "http://localhost:8080/User",
+				type: "GET",
+				async: false,
+				success: function(XHR){
+					userId = XHR;
+					
+					if(userId == null){	
+						alert("您尚未登录，请登录");
+						window.location.href="login_signup.html";
+					}
+				},
+				error: function(){
+					alert("您尚未登录，请登录");
+					window.location.href="login_signup.html";
+				}
+			});
+			return userId;
+		}
+		var userId = getUserId();
+	</script>
+    <script src="js/homepage.js"></script>
+    <script src="js/marked.js"></script>
+    <script src="js/notelist.js"></script>
+    <script type="text/javascript">
+    </script>
+
+    <script>
+        $(function () {
+            layui.use(['form', 'layedit'], function () {
+                var form = layui.form,
+                    layedit = layui.layedit;
+
+                form.on('select(theme)', function (data) {
+                    acen_edit.setTheme(data.value);
+                });
+                form.on('select(fontsize)', function (data) {
+                    acen_edit.setFontSize(data.value);
+                });
+
+            });
+        });
+    </script>
+</body>
+
+</html>

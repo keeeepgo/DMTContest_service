@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="bootstrap-3.3.7-dist/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="css/homepage.css" />
+    <link rel="stylesheet" type="text/css" href="layui/css/layui.css" />
+    <link rel="stylesheet" href="iconfont/material-icons.css" />
+    <link rel="stylesheet" type="text/css" href="css/note.css" />
+    <link rel="stylesheet" href="css/markdown.css" />
+
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+
+    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <style type="text/css">
+        .row {
+            box-shadow: 0 0 50px 0 rgba(0, 0, 0, .25);
+        }
+
+        .row:after {
+            content: "";
+            clear: both;
+            display: block;
+            height: auto;
+        }
+
+        #toolbar {
+            background-color: #444;
+            width: 100%;
+        }
+
+        #toolbar button{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #toolbar select{
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        #container {
+            overflow: auto;
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        #editor-column,
+        #preview-column {
+            width: 49.5%;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            background-color: #fff;
+        }
+
+        .pull-left {
+            float: left;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        #mdeditor,
+        #preview,
+        #panel-editor,
+        #panel-preview {
+            height: 100%;
+            width: 100%;
+        }
+
+        .layui-form-item {
+            color: #000;
+        }
+
+        .layui-form-item .layui-inline {
+            width: auto;
+            font-size: 0.5em;
+            margin: 0;
+            padding: 0;
+            border: 0;
+        }
+
+        .layui-form-label {
+            float: left;
+            display: span;
+            padding: 0.5em;
+            width: auto;
+            color: #fff;
+            text-align: center;
+        }
+
+        .layui-form-item .layui-input-inline {
+            float: left;
+            width: auto;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="top"></div>
+    <nav class="menu-activea">
+        <h1>Menu</h1>
+        <ul>
+            <li>
+                <b>
+                    <a href="homepage.html">资讯</a>
+                </b>
+            </li>
+            <hr>
+            <li>
+                <b>
+                    <a href="notelists.html">笔记</a>
+                </b>
+            </li>
+            <hr>
+            <li>
+                <b>
+                    <a href="editnote.html">编辑</a>
+                </b>
+            </li>
+            <hr>
+            <li>
+                <b>
+                    <a href="weboption.html">设置</a>
+                </b>
+            </li>
+            <hr>
+        </ul>
+    </nav>
+    <main id="Main">
+        <section id="editnotepage">
+            <div class="row">
+                <div id='toolbar'>
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item">
+                            <button type="button" class="layui-btn" style="background: #000;" id="upload_note">上传</button>
+                            <button type="button" class="layui-btn layui-btn-primary" id="insert_bold">加粗</button>
+                            <button type="button" class="layui-btn layui-btn-primary" id="insert_italic">斜体</button>
+                            <button type="button" class="layui-btn layui-btn-primary" id="insert_quote">引用</button>
+
+                            <div class="layui-inline">
+                                <label class="layui-form-label"></label>
+                                <div class="layui-input-inline" style="font-size:13px;">
+                                    <select id="theme" lay-filter="theme" size="1">
+                                        <option value="">请选择主题颜色</option>
+                                        <optgroup label="Bright">
+                                            <option value="ace/theme/chrome">Chrome</option>
+                                            <option value="ace/theme/clouds">Clouds</option>
+                                            <option value="ace/theme/crimson_editor">Crimson Editor</option>
+                                            <option value="ace/theme/dawn">Dawn</option>
+                                            <option value="ace/theme/dreamweaver">Dreamweaver</option>
+                                            <option value="ace/theme/eclipse">Eclipse</option>
+                                            <option value="ace/theme/github">GitHub</option>
+                                            <option value="ace/theme/iplastic">IPlastic</option>
+                                            <option value="ace/theme/solarized_light">Solarized Light</option>
+                                            <option value="ace/theme/textmate">TextMate</option>
+                                            <option value="ace/theme/tomorrow">Tomorrow</option>
+                                            <option value="ace/theme/xcode">XCode</option>
+                                            <option value="ace/theme/kuroir">Kuroir</option>
+                                            <option value="ace/theme/katzenmilch">KatzenMilch</option>
+                                            <option value="ace/theme/sqlserver">SQL Server</option>
+                                        </optgroup>
+                                        <optgroup label="Dark">
+                                            <option value="ace/theme/ambiance">Ambiance</option>
+                                            <option value="ace/theme/chaos">Chaos</option>
+                                            <option value="ace/theme/clouds_midnight">Clouds Midnight</option>
+                                            <option value="ace/theme/cobalt">Cobalt</option>
+                                            <option value="ace/theme/gruvbox">Gruvbox</option>
+                                            <option value="ace/theme/idle_fingers">idle Fingers</option>
+                                            <option value="ace/theme/kr_theme">krTheme</option>
+                                            <option value="ace/theme/merbivore">Merbivore</option>
+                                            <option value="ace/theme/merbivore_soft">Merbivore Soft</option>
+                                            <option value="ace/theme/mono_industrial">Mono Industrial</option>
+                                            <option value="ace/theme/monokai">Monokai</option>
+                                            <option value="ace/theme/pastel_on_dark">Pastel on dark</option>
+                                            <option value="ace/theme/solarized_dark">Solarized Dark</option>
+                                            <option value="ace/theme/terminal">Terminal</option>
+                                            <option value="ace/theme/tomorrow_night">Tomorrow Night</option>
+                                            <option value="ace/theme/tomorrow_night_blue">Tomorrow Night Blue</option>
+                                            <option value="ace/theme/tomorrow_night_bright">Tomorrow Night Bright</option>
+                                            <option value="ace/theme/tomorrow_night_eighties">Tomorrow Night 80s</option>
+                                            <option value="ace/theme/twilight">Twilight</option>
+                                            <option value="ace/theme/vibrant_ink">Vibrant Ink</option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline" style="font-size:13px;">
+                                <label class="layui-form-label"></label>
+                                <div class="layui-input-inline">
+                                    <select id="fontsize" lay-filter="fontsize" size="1">
+                                        <option value="10px">10px</option>
+                                        <option value="11px">11px</option>
+                                        <option value="12px" selected="selected">12px</option>
+                                        <option value="13px">13px</option>
+                                        <option value="14px">14px</option>
+                                        <option value="16px">16px</option>
+                                        <option value="18px">18px</option>
+                                        <option value="20px">20px</option>
+                                        <option value="24px">24px</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div id='container' style="height: 400px;">
+                    <div id='editor-column' class='pull-left'>
+                        <div id='panel-editor' >
+                            <!--编辑区-->
+                            <div class="editor-content" id="mdeditor" ></div>
+                        </div>
+                    </div>
+                    <div id='preview-column' class='pull-right'>
+                        <div id='panel-preview'>
+                            <!--显示区-->
+                            <div id="preview" class="markdown-body"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+	<script>
+		function getUserId(){
+			var userId;
+			$.ajax({
+				url: "http://localhost:8080/User",
+				type: "GET",
+				async: false,
+				success: function(XHR){
+					userId = XHR;
+					
+					if(userId == null){	
+						alert("您尚未登录，请登录");
+						window.location.href="login_signup.html";
+					}
+				},
+				error: function(){
+					alert("您尚未登录，请登录");
+					window.location.href="login_signup.html";
+				}
+			});
+			return userId;
+		}
+		var userId = getUserId();
+	</script>
+    <script src="js/homepage.js"></script>
+    <script src="js/marked.js"></script>
+    <script src="ace/ace.js"></script>
+    <script>
+        $(function () {
+            var acen_edit = ace.edit('mdeditor');
+            acen_edit.setTheme('ace/theme/chrome');
+            acen_edit.getSession().setMode('ace/mode/markdown');
+            acen_edit.renderer.setShowPrintMargin(false);
+
+            function insertText(val) {
+                acen_edit.insert(val); //光标位置插入
+            }
+
+            $('#insert_bold').click(function () {
+                insertText('**?**');
+            });
+
+            $('#insert_italic').click(function () {
+                insertText('_?_');
+            });
+
+            $('#insert_quote').click(function () {
+                insertText('>');
+            });
+
+            $("#mdeditor").keyup(function () {
+                $("#preview").html(marked(acen_edit.getValue()));
+
+            });
+            
+            var userId = 1;
+            var url_NoteList = "http://localhost:8080/NoteList";
+            $("#upload_note").click(function(){
+                var today = new Date();
+                today_str = today.getFullYear() + "-" + today.getMonth() + "-" + today.getDay();
+                console.log(today_str);
+                $.ajax({
+                    url: url_NoteList,
+                    type: "POST",
+                    data: "userId="+userId+"&noteDate="+today_str+"&noteContent="+acen_edit.getValue(),
+                    success: function(xhr){
+                        console.log(xhr["responseContent"]);
+                    }
+                });
+            })
+
+            layui.use(['form', 'layedit'], function () {
+                var form = layui.form,
+                    layedit = layui.layedit;
+
+                form.on('select(theme)', function (data) {
+                    acen_edit.setTheme(data.value);
+                });
+                form.on('select(fontsize)', function (data) {
+                    acen_edit.setFontSize(data.value);
+                });
+
+            });
+
+
+
+        });
+    </script>
+
+</body>
+
+</html>

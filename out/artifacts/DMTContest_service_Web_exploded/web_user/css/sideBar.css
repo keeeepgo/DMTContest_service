@@ -1,0 +1,25 @@
+#sidebutton {
+    position: fixed;
+    top: 45px;
+    right: 5%;
+    width: 3em;
+    height: 3em;
+    background-color: #eee;
+    border: hidden;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+#sidebar {
+    background: #ffffff;
+    opacity: 0.9;
+    transition: -webkit-transform 300ms ease-out;
+    transition: transform 300ms ease-out;
+    transition: transform 300ms ease-out, -webkit-transform 300ms ease-out;
+    position: fixed;
+    right: 0;
+    width: 600px;
+    height: 100%;
+    overflow: scroll;
+    margin-top: -111px
+}

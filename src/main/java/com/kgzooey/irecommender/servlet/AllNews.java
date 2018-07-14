@@ -100,4 +100,23 @@ public class AllNews extends HttpServlet {
             }
         }
     }
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //super.doDelete(req, resp);
+        try {
+            String newsId = req.getParameter("newsId");
+            String sql = "DELETE FROM news WHERE newsId=" + newsId;
+            int temp = DBUtil.executeUpdata(sql);
+            resp.setHeader("Content-type", "text/html; charset=utf-8");
+            resp.setHeader("Access-Control-Allow-Origin", "*");
+            resp.setHeader("Access-Control-Allow-Headers", "Authentication");
+            if (temp < 1) {
+                resp.getWriter().write("删除成功");
+            } else {
+                resp.getWriter().write("删除失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

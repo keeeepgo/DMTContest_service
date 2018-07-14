@@ -1,0 +1,82 @@
+.noteborder {
+    padding: 40px;
+    text-align: left;
+    font-size: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+#fontcontrols {
+    padding: 2px;
+    width: 3em;
+    background: #eee;
+    position: fixed;
+    top: 150px;
+    right: 5%;
+    margin: 0 0 0 1200px;
+    text-align: center;
+    transition: .25s ease-out;
+}
+
+#fontcontrols a {
+    font-size: 24px;
+    color: #393e46;
+    display: block;
+    font-weight: bold;
+    padding: 5px;
+}
+
+#fontcontrols a:hover {
+    color: #393e46;
+    background: #a9a9a9;
+    transition: .25s ease-out;
+}
+
+#fontcontrols a.selected {
+    background: #eee;
+    color: #4466cc !important;
+}
+
+#small {
+    font-size: 10px !important;
+}
+
+#medium {
+    font-size: 14px !important;
+}
+
+#large {
+    font-size: 18px !important;
+}
+
+.small {
+    font-size: 75%;
+}
+
+#note_title {
+    font-size: 26px;
+    line-height: 36px;
+    font-weight: 700;
+    margin: 10px 0;
+}
+
+#note_content h1 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+#note_content h2 {
+    font-size: 20px;
+    line-height: 36px;
+    margin: 10px 0;
+}
+
+#note_content p {
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-indent: 2em;
+    line-height: 32px;
+    font-stretch: normal;
+    font-weight: normal;
+    font-size: 16px;
+    font-family: 微软雅黑, "MicrosoftYaHei", arial, sans-serif;
+}
